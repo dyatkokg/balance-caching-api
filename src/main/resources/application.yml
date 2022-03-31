@@ -1,0 +1,35 @@
+logging:
+  level:
+    org.springframework.web.client.RestTemplate: DEBUG
+
+api:
+  external:
+    subscriber-system:
+      name: subscriber-system
+      url: localhost:8081/balance/
+      endpoint: all
+
+full-path: ${api.external.subscriber-system.url}${api.external.subscriber-system.endpoint}
+
+cache:
+  fill-delay: 60
+  refresh-delay: 60
+  condition: 100.0
+
+cloud:
+    stream:
+      bindings:
+        notes-output:
+          destination: app.api.balance
+          binder: local_rabbit
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
