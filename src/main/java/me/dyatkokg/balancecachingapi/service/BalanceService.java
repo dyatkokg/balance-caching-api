@@ -33,23 +33,6 @@ public class BalanceService {
     @Value("${cache.condition}")
     private Double condition;
 
-    @Value("${cache.fill-delay}")
-    private Long cacheFill;
-
-    @Value("${api.external.subscriber-system.url}")
-    private String systemApiPath;
-
-    @Value("${full-path}")
-    private String fullPath;
-
-    @PostConstruct
-    private void postConstruct() {
-        log.info("cache fill parameter: {}", cacheFill);
-        log.info("URL is: {}", systemApiPath);
-        log.info(fullPath);
-    }
-
-
     @Scheduled(fixedDelayString = "${cache.fill-delay}", timeUnit = TimeUnit.SECONDS)
     public void save() {
         List<Balance> balances = systemClient.getBalances().stream().map(mapper::toEntity).collect(Collectors.toList());
