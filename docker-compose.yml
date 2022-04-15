@@ -1,0 +1,24 @@
+#version: '3'
+#
+#services:
+#  subscriber-system:
+#    image: subscriber-system:1.0
+#    container_name: "subscriber-system"
+#    ports:
+#      - "5551:8081"
+#    environment:
+#      POSTGRES_PASSWORD: database
+#    volumes:
+#      - $HOME/docker/volumes/postgres_2:/var/lib/postgresql/data postgres
+#
+#  balance-caching-api:
+#    image: balance-caching-api:1.0
+#    container_name: "balance-caching-api"
+#    depends_on:
+#      - subscriber-system
+#    ports:
+#      - "5552:8082"
+#    environment:
+#      POSTGRES_URL: jdbc:postgresql://subscriber-system:5432/postgres
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: database

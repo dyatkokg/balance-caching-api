@@ -6,7 +6,7 @@ api:
   external:
     subscriber-system:
       name: subscriber-system
-      url: localhost:8081/balance/
+      url: ${BALANCES_URL:localhost:8081/balance/}
       endpoint: all
 
 full-path: ${api.external.subscriber-system.url}${api.external.subscriber-system.endpoint}
@@ -22,14 +22,13 @@ cloud:
         notes-output:
           destination: app.api.balance
           binder: local_rabbit
-      binders:
-        local_rabbit:
-          type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: localhost
-                port: 5672
-                username: guest
-                password: guest
-                virtual-host: /
+
+server:
+  port: 8082
+
+spring:
+  rabbitmq:
+    host: ${RABBIT_HOST:rabbitmq}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASSWORD:guest}
